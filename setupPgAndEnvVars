@@ -1,0 +1,14 @@
+npm install pg                     #intalls postgres sql express
+npm install --save-dev @types/pg   #make it work with type script
+
+export PG_HOST=database-1.c32anyjmqflo.us-east-1.rds.amazonaws.com
+export PG_USER=rene
+export PG_PASSWORD=wasspord
+export PG_DATABASE=rene_db
+
+#to see the values were set to
+
+echo PG_HOST is $PG_HOST
+echo PG_USER is $PG_USER
+echo PG_PASSWORD is $PG_PASSWORD
+echo PG_DATABASE is  $PG_DATABASE
