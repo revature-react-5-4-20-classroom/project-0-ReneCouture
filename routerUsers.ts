@@ -13,6 +13,7 @@ export const routerUsers:Router=express.Router()
 //allowed 'finance-manager'
 routerUsers.get(`/`,async(rq: Request, rs: Response, next: NextFunction) => 
 {
+    //if(rq.session.user!=)
     authCheckLoggedInUser(rq,rs,['finance-manager'])
     console.log(`GET /users has taken a look`)
     

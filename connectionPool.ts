@@ -11,7 +11,7 @@ export const connectionPool:Pool=new Pool({
     max:        2
 });
 
-export async function performQuery(query:string,queryParams?):Promise<Row[]>
+export async function performQuery(query:string,queryParams?:any):Promise<Row[]>
 {
     console.log(`performQuery() has taken a look`)
     let client:PoolClient=await connectionPool.connect()

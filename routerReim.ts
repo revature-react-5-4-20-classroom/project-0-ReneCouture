@@ -145,7 +145,7 @@ routerReim.post(``,async(rq:Request,rs:Response)=>{
     try
     {
         //find the reimbursement id we just inserted
-        let rows:Row[]=await performQuery('select max(id) from tableReims;')
+        let rows:any[]=await performQuery('select max(id) from tableReims;')
         let row=rows[0]
         id=row['max']
         //console.log(`row=${row}`)
