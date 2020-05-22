@@ -1,0 +1,4 @@
+echo PG_HOST is $PG_HOST
+echo PG_USER is $PG_USER
+echo PG_PASSWORD is $PG_PASSWORD
+echo PG_DATABASE is  $PG_DATABASE
