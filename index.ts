@@ -5,6 +5,9 @@ let app=express();
 //this is due wednesday may 20
 function pl(text:string):void{console.log(text)}//shorter print line
 
+import { corsFilter } from './middleware/corsFilter'
+app.use(corsFilter)
+
 app.use(bodyparser.json())
 
 app.use(``,(rq:Request,rs:Response,next:NextFunction)=>{ //see what is happening

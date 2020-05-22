@@ -7,11 +7,13 @@ export function authAdminMiddleware(rq:Request,rs:Response,next:NextFunction){
     console.log(`authAdminMiddleware() has taken a look`)
     if(!rq.session)
     {
+        console.log(`authAdminMiddleware(). No session`)
         rs.status(401).send(`authAdminMiddleware(). No session`)
     }
     else if(!rq.session.user)
     {
-        rs.status(402).send(`authAdminMiddleware(). No session.user`)
+        console.log(`authAdminMiddleware(). No session.user`)
+        rs.status(401).send(`authAdminMiddleware(). No session.user`)
     }
     // else if(rq.session.user.role!=='Admin')
     // {
