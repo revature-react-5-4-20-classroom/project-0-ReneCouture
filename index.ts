@@ -67,7 +67,7 @@ app.post(`/login`,async (req: Request, res: Response) =>
                 
                 username=${username}
 
-                password=${username}
+                password=${password}
 
                 ${e.message}
                 `);
