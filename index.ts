@@ -62,7 +62,15 @@ app.post(`/login`,async (req: Request, res: Response) =>
         catch(e)
         {
             console.log(e.message);
-            res.status(401).send(`Could not find username and password to login ${e.message}`);
+            res.status(401).send(
+                `Could not find username and password to login. 
+                
+                username=${username}
+
+                password=${username}
+
+                ${e.message}
+                `);
         }
     }
 })
