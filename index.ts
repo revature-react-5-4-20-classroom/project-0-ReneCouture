@@ -17,6 +17,10 @@ app.use(``,(rq:Request,rs:Response,next:NextFunction)=>{ //see what is happening
     next()
 })
 
+app.get(`/newEndpoint`,(rq:Request,rs:Response)=>{
+    rs.send('webhooks are working I guess')
+})
+
 import{middlewareSession}from'./middleware/session'
 app.use(middlewareSession) //use express sessions.
 
