@@ -1,6 +1,9 @@
 import express      from 'express';
 import bodyparser   from 'body-parser'
 import { Request,Response,NextFunction } from "express";
+import { performQuery } from './connectionPool';
+import { Row } from './databaseFake';
+
 let app=express();
 //this is due wednesday may 20
 function pl(text:string):void{console.log(text)}//shorter print line
@@ -59,7 +62,7 @@ app.post(`/login`,async (req: Request, res: Response) =>
         catch(e)
         {
             console.log(e.message);
-            res.status(401).send('Could not find username and password to login');
+            res.status(401).send(`Could not find username and password to login ${e.message}`);
         }
     }
 })
@@ -76,8 +79,6 @@ import {routerUsers} from './routerUsers'
 app.use(`/users`,routerUsers)
 
 import {routerReim} from './routerReim'
-import { performQuery } from './connectionPool';
-import { Row } from './databaseFake';
 app.use(`/reimbursements`,routerReim)
 
 app.get(``,(rq:Request,rs:Response)=>{//the last GET
