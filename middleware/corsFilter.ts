@@ -11,7 +11,7 @@ export function corsFilter(rq:Request,rs:Response,next:NextFunction)
     rs.header('Access-Control-Allow-Origin',        `${rq.headers.origin}`)
     rs.header('Access-Control-Allow-Headers',       'Origin,Content-type,Accept')
     rs.header('Access-Control-Allow-Credentials',   'true')
-    rs.header('Access-Control-Allow-Methods',       'GET,POST,PUT,PATH,DELETE')
+    rs.header('Access-Control-Allow-Methods',       'GET,POST,PUT,PATH,PATCH,DELETE')
 
     if(rq.method==='OPTIONS')
     {
