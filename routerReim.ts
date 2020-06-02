@@ -36,6 +36,31 @@ routerReim.get(`/status/:statusId`,async(rq:Request,rs:Response)=>{
     // return rs.json(arrayOfReimbursments)
 })
 
+//find all reimbursements in the system
+//accessd by 'finance-manager'
+routerReim.get(``,async(rq:Request,rs:Response)=>{
+    authCheckLoggedInUser(rq,rs,['finance-manager','admin'])
+    console.log(`GET /reimbursements has taken a look`)
+    
+    try
+    {
+        const rows:Row[]=await performQuery('select*from tableReims order by id;')
+        rs.json(rows);
+    }
+    catch(e)
+    {
+        console.log(`/reimbursements ${e}`)
+        rs.send('GET /reimbursements could not perform query')
+    }
+
+    
+    // let statusId=+rq.params.statusId
+    // let arrayOfReimbursments=reimbursements.filter((reim:Reimbursement)=>{
+    //     return(reim.status===statusId)
+    // })
+    // return rs.json(arrayOfReimbursments)
+})
+
 //find reimbursements by userId
 //accessd by 'finance-manager'
 routerReim.get(`/author/userId/:userId`,async(rq:Request,rs:Response)=>{
