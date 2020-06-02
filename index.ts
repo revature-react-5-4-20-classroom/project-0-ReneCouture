@@ -63,11 +63,16 @@ app.post(`/login`,async (req: Request, res: Response) =>
         {
             console.log(e.message);
             res.status(401).send(
-                `Could not find username and password to login. 
+                `/login
                 
-                username=${username}
+                Could not find username and password to login. 
+                
+                
 
+                username=${username}
                 password=${password}
+
+                The PG_HOST environment variables may need to be set if we can't connect to the database
 
                 ${e.message}
                 `);

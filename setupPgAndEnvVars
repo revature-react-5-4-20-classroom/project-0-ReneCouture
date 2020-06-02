@@ -2,6 +2,6 @@
 #npm install --save-dev @types/pg   #make it work with type script
 
 export PG_HOST=database-1.c32anyjmqflo.us-east-1.rds.amazonaws.com
-export PG_DATABASE=reneDB
+export PG_DATABASE=renedb
 export PG_USER=postgres
 export PG_PASSWORD=wasspord

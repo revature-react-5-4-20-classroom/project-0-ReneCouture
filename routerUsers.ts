@@ -60,8 +60,19 @@ routerUsers.get(`/:id`,async(rq:Request,rs:Response)=>{//find user by id.
 //accessd by 'admin'
 routerUsers.patch(``,async(rq:Request,rs:Response)=>{
     console.log(`PATCH /users has taken a look`)
-    authCheckLoggedInUser(rq,rs,['admin'])
-    let user=rq.body
+
+    let user=rq.body //user making request
+
+    if(!rq.session)
+    {
+        rs.send(`routerUsers.patch() no session. rq.session=${rq.session}`);
+    }
+    else if(rq.session.user===user) //if the logged in user is the user making the request. skip authentication
+    {
+        authCheckLoggedInUser(rq,rs,['admin'])
+    }
+
+    
 
     if(!user.id){
         rs.send(`Cannot update user. user id invalid. id=${user.id}`);

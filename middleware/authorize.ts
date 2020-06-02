@@ -38,8 +38,16 @@ export function authReadOnlyMiddleware(rq:Request,rs:Response,next:NextFunction)
     }
 }
 
-//returns a function customized to autheticate all the roles
-//authRoleFactory(['Admin','anotherRole'])
+/*
+    authRoleFactory(['Admin','anotherRole'])
+
+    Sends a response
+        when the logged in user role matches one of the roles in the array
+
+    Does nothing
+        when the logged in user is authorized
+
+*/
 export async function authCheckLoggedInUser(rq:Request,rs:Response,allowedRoles:string[])
 {
     console.log(`authCheckLoggedInUser() has taken a look`)
