@@ -62,9 +62,20 @@ routerReim.get(``,async(rq:Request,rs:Response)=>{
 })
 
 //find reimbursements by userId
-//accessd by 'finance-manager'
-routerReim.get(`/author/userId/:userId`,async(rq:Request,rs:Response)=>{
-    authCheckLoggedInUser(rq,rs,['finance-manager'])
+//accessd by 'finance-manager' or logged in user
+routerReim.get(`/author/userId/:userId`,async(rq:Request,rs:Response)=>
+{
+    let user=rq.body //user making request
+
+    if(!rq.session)
+    {
+        rs.send(`routerReim.get() no session. rq.session=${rq.session}`);
+    }
+    else if(rq.session.user===user) //if the logged in user is the user making the request. skip authentication
+    {
+        authCheckLoggedInUser(rq,rs,['finance-manager'])
+    }
+
     console.log(`GET /author/userId/:userId has taken a look`)
 
     try
