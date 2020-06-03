@@ -13,8 +13,8 @@ export const routerUsers:Router=express.Router()
 //allowed 'finance-manager'
 routerUsers.get(`/`,async(rq: Request, rs: Response, next: NextFunction) => 
 {
-    //if(rq.session.user!=)
     authCheckLoggedInUser(rq,rs,['finance-manager'])
+
     console.log(`GET /users has taken a look`)
     
     try 
@@ -37,9 +37,20 @@ routerUsers.get(`/`,async(rq: Request, rs: Response, next: NextFunction) =>
     }
 })
 
-//accessed by finance-manager
+//accessed by finance-manager and current logged in user
 routerUsers.get(`/:id`,async(rq:Request,rs:Response)=>{//find user by id.
-    authCheckLoggedInUser(rq,rs,['finance-manager'])
+
+    let user=rq.body //user making request
+
+    if(!rq.session)
+    {
+        rs.send(`routerUsers.get() no session. rq.session=${rq.session}`);
+    }
+    else if(rq.session.user===user) //if the logged in user is the user making the request. skip authentication
+    {
+        authCheckLoggedInUser(rq,rs,['finance-manager'])
+    }
+
     console.log(`GET /users/:id has taken a look`)
 
     try{
