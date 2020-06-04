@@ -11,7 +11,7 @@ function pl(text:string):void{console.log(text)}//shorter print line
 import { corsFilter } from './middleware/corsFilter'
 app.use(corsFilter)
 
-app.use(bodyparser.urlencoded({ extended: true }));
+//app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json())
 
 app.use(``,(rq:Request,rs:Response,next:NextFunction)=>{ //see what is happening
