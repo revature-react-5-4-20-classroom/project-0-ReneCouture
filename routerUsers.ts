@@ -68,7 +68,7 @@ routerUsers.get(`/:id`,async(rq:Request,rs:Response)=>{//find user by id.
 
 //user update any possible fields given
 //the body of the request must contain a json object representing the new user info
-//accessd by 'admin'
+//accessd by 'admin' and logged in user
 routerUsers.patch(``,async(rq:Request,rs:Response)=>{
     console.log(`PATCH /users has taken a look`)
 
@@ -97,12 +97,12 @@ routerUsers.patch(``,async(rq:Request,rs:Response)=>{
         await performQuery(`update tableUsers set password=$1 where id=$2;`, [user.password,user.id])
     }
 
-    if(user.firstName){
-        await performQuery(`update tableUsers set firstName=$1 where id=$2;`,[user.firstName,user.id])
+    if(user.firstname){
+        await performQuery(`update tableUsers set firstname=$1 where id=$2;`,[user.firstname,user.id])
     }
 
-    if(user.lastName){
-        await performQuery(`update tableUsers set lastName=$1 where id=$2;`, [user.lastName,user.id])
+    if(user.lastname){
+        await performQuery(`update tableUsers set lastname=$1 where id=$2;`, [user.lastname,user.id])
     }
 
     if(user.email){
