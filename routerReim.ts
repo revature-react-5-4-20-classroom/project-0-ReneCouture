@@ -155,22 +155,21 @@ routerReim.post(``,async(rq:Request,rs:Response)=>{
 
     if(!reim.author)        {sendInvalidEntry(rs,'Author')}
     if(!reim.amount)        {sendInvalidEntry(rs,'Amount')}
-    // if(!reim.dateSubmitted) {sendInvalidEntry(rs,'Date Submitted')}
+    // if(!reim.dateSubmitted) {sendInvalidEntry(rs,'Date Submitted')}//database/server time will be used for these
     // if(!reim.dateResolved)  {sendInvalidEntry(rs,'Date Resolved')}
     if(!reim.description)   {sendInvalidEntry(rs,'Description')}
-    if(!reim.resolver)      {sendInvalidEntry(rs,'Resolver')}
+    //if(!reim.resolver)      {sendInvalidEntry(rs,'Resolver')} //resolver will be 0 because this will now be pending
     if(!reim.status)        {sendInvalidEntry(rs,'Status')}
     if(!reim.type)          {sendInvalidEntry(rs,'Type')}
 
     try
     {
-        await performQuery(`insert into tableReims values (default,$1,$2,localtimestamp,null,$3,$4,$5,$6);`,
+        await performQuery(`insert into tableReims values (default,$1,$2,localtimestamp,null,$3,0,$4,$5);`,
         [   reim.author,        //1
             reim.amount,        //2
             reim.description,   //3
-            reim.resolver,      //4
-            reim.status,        //5
-            reim.type])         //6
+            reim.status,        //4
+            reim.type])         //5
 
         // await performQuery(`insert into tableReims values (default,$1,$2,$3,$4,$5,$6,$7,$8);`,
         // [   reim.author,        //1
