@@ -112,20 +112,24 @@ routerReim.patch(``,async(rq:Request,rs:Response)=>{
         await performQuery(`update tableReims set amount=$1 where id=$2;`, [reim.amount,reim.id])
     }
 
-    if(reim.dateSubmitted){
-        await performQuery(`update tableReims set dateSubmitted=$1 where id=$2;`, [reim.dateSubmitted,reim.id])
-    }
+    // if(reim.dateSubmitted){
+    //     await performQuery(`update tableReims set dateSubmitted=$1 where id=$2;`, [reim.dateSubmitted,reim.id])
+    // }
 
-    if(reim.dateResolved){
-        await performQuery(`update tableReims set dateResolved=$1 where id=$2;`, [reim.dateResolved,reim.id])
-    }
+    // if(reim.dateResolved){
+    //     await performQuery(`update tableReims set dateResolved=$1 where id=$2;`, [reim.dateResolved,reim.id])
+    // }
 
     if(reim.description){
         await performQuery(`update tableReims set description=$1 where id=$2;`, [reim.description,reim.id])
     }
 
+    //resolve the reim and also set the time when it was resolved
     if(reim.resolver){
-        await performQuery(`update tableReims set resolver=$1 where id=$2;`, [reim.resolver,reim.id])
+        //await performQuery(`update tableReims set resolver=$1 where id=$2;`, [reim.resolver,reim.id])
+
+        await performQuery(`update tableReims set resolver=$1,dateresolved=localtimestamp where id=$2;`, [reim.resolver,reim.id])
+        
     }
 
     if(reim.status){
@@ -137,7 +141,7 @@ routerReim.patch(``,async(rq:Request,rs:Response)=>{
     }
 
     //find the reimbursement we just inserted
-    const rows:Row[]=await performQuery('select*from tableReims WHERE id='+reim.id+';')
+    const rows:Row[]=await performQuery(`select*from tableReims WHERE id=$1;`,[reim.id])
     rs.json(rows);
 })
 
@@ -151,8 +155,8 @@ routerReim.post(``,async(rq:Request,rs:Response)=>{
 
     if(!reim.author)        {sendInvalidEntry(rs,'Author')}
     if(!reim.amount)        {sendInvalidEntry(rs,'Amount')}
-    if(!reim.dateSubmitted) {sendInvalidEntry(rs,'Date Submitted')}
-    if(!reim.dateResolved)  {sendInvalidEntry(rs,'Date Resolved')}
+    // if(!reim.dateSubmitted) {sendInvalidEntry(rs,'Date Submitted')}
+    // if(!reim.dateResolved)  {sendInvalidEntry(rs,'Date Resolved')}
     if(!reim.description)   {sendInvalidEntry(rs,'Description')}
     if(!reim.resolver)      {sendInvalidEntry(rs,'Resolver')}
     if(!reim.status)        {sendInvalidEntry(rs,'Status')}
@@ -160,15 +164,23 @@ routerReim.post(``,async(rq:Request,rs:Response)=>{
 
     try
     {
-        await performQuery(`insert into tableReims values (default,$1,$2,$3,$4,$5,$6,$7,$8);`,
+        await performQuery(`insert into tableReims values (default,$1,$2,localtimestamp,null,$3,$4,$5,$6);`,
         [   reim.author,        //1
             reim.amount,        //2
-            reim.dateSubmitted, //3
-            reim.dateResolved,  //4
-            reim.description,   //5
-            reim.resolver,      //6
-            reim.status,        //7
-            reim.type])         //8
+            reim.description,   //3
+            reim.resolver,      //4
+            reim.status,        //5
+            reim.type])         //6
+
+        // await performQuery(`insert into tableReims values (default,$1,$2,$3,$4,$5,$6,$7,$8);`,
+        // [   reim.author,        //1
+        //     reim.amount,        //2
+        //     reim.dateSubmitted, //3
+        //     reim.dateResolved,  //4
+        //     reim.description,   //5
+        //     reim.resolver,      //6
+        //     reim.status,        //7
+        //     reim.type])         //8
     }
     catch(e)
     {
